@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { faCoins } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useUser } from '@auth0/nextjs-auth0/client';
+import { Logo } from '../Logo/Logo';
 
 export const AppLayout = ({ children }) => {
   const {user } = useUser();
@@ -10,7 +11,7 @@ export const AppLayout = ({ children }) => {
     <div className="grid grid-cols-[300px_1fr] h-screen max-h-screen">
       <div className="flex flex-col text-white overflow-hidden">
         <div className="bg-zinc-800 px-2">
-          <div>Logo</div>
+          <Logo/>
           <Link href='/post/new' className='text-zinc-100 bg-zinc-400 tracking-wider w-full font-bold cursor-pointer uppercase px-4 py-2 rounded-md hover:bg-zinc-600 transition-colors block'>New Post</Link>
           <Link href='/token-topup' className='block mt-2 text-center'>
             <FontAwesomeIcon icon={faCoins} className='fa-thin fa-coins text-zinc-400'/>
