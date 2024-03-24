@@ -1,12 +1,11 @@
-import { Configuration, OpenAIApi} from "openai"
+import OpenAI from "openai";
 
-export default async function handler(req, res) {
-    const config = new Configuration({
+export default async function handler(_req, res) {
+    const openai = new OpenAI({
         apiKey: process.env.OPENAI_API_KEY
     })
-    const openai = new OpenAIApi(config);
 
-    const response = await openai.createCompletion({
+    const response = await openai.completions.create({
         model: "text-davinci-003",
         temperature: 0,
         max_tokens: 4000,
