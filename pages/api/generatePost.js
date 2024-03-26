@@ -5,12 +5,24 @@ export default async function handler(_req, res) {
         apiKey: process.env.OPENAI_API_KEY
     })
 
+    const topic = "Top 10 NBA players"
+    const keywords = "2017, golden state warriors, los angeles lakers"
+
     const response = await openai.completions.create({
-        model: "text-davinci-003",
+        model: "gpt-3.5-turbo-instruct",
         temperature: 0,
-        max_tokens: 4000,
-        prompt: "generate a passage about dogs"
+        max_tokens: 3600,
+        prompt: `Write a Long and SEO-Friendly blog post about ${topic}, that targets the following comma-seperated keywords : ${keywords}
+        The content must be formatted in SEO-friendly HTML.
+        The response must include approriate HTML title and meta description content.
+        The return format must be stringified JSON in the following format: 
+        {
+            "postContent": post content here,
+            "title": title goes here,
+            "metaDescription": meta description goes here
+        }`
     });
     console.log('response' , response);
-  res.status(200).json({ post: response.data.choices })
+  res.status(200).json({ post: response.choices[0]?.text.split('\n').join('')})
 }
+
