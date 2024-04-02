@@ -1,4 +1,4 @@
-import OpenAI from "openai";
+import { OpenAI }  from "openai";
 
 export default async function handler(_req, res) {
     const openai = new OpenAI({
