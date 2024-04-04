@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.btn {
+    @apply bg-zinc-400 tracking-wider w-full font-bold cursor-pointer uppercase px-4 py-2 rounded-md hover:bg-zinc-600 transition-colors block mb-4;
+}
+
