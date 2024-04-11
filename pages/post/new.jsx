@@ -1,6 +1,7 @@
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import { AppLayout } from "../../components/AppLayout";
 import { useState } from "react";
+import Markdown from "react-markdown";
 
 export default function NewPost(props){
     console.log("Props",props);
@@ -17,8 +18,7 @@ export default function NewPost(props){
             body: JSON.stringify({topic, keywords}),
         });
         const json = await response.json();
-        console.log("RESULT: ", json.post);
-        setPostContent(json.post);
+        setPostContent(json.postContent);
     };
     return(
         <div className="text-white">
@@ -43,7 +43,7 @@ export default function NewPost(props){
                 Generate
             </button>
             </form>
-            <div className="max-w-screen-sm p-10" dangerouslySetInnerHTML={{__html: postContent}}/>
+            <Markdown>{postContent}</Markdown>
             </div>
     
     );
