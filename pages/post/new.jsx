@@ -18,7 +18,7 @@ export default function NewPost(props){
             body: JSON.stringify({topic, keywords}),
         });
         const json = await response.json();
-        setPostContent(json.postContent);
+        setPostContent(json.post.postContent);
     };
     return(
         <div className="text-white">
