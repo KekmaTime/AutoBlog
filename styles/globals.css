@@ -2,7 +2,45 @@
 @tailwind components;
 @tailwind utilities;
 
-.btn {
+@layer base {
+    h1,h2,h3,h4,h5,h6{
+        @apply font-heading my-6;
+    }
+    h1{
+        @apply text-4xl;
+    }
+    h2{
+        @apply text-3xl;
+    }
+    h3{
+        @apply text-2xl;
+    }
+    h4{
+        @apply text-xl;
+    }
+    h5{
+        @apply text-lg;
+    }
+    ul {
+        list-style-type: disc;
+    }
+    ol {
+        list-style-type: decimal;
+    }
+    li {
+        @apply my-2;
+    }
+    ul, ol {
+        @apply my-4;
+    }
+    p {
+        @apply my-2;
+    }
+}
+
+@layer components{
+    .btn {
     @apply bg-zinc-400 tracking-wider w-full font-bold cursor-pointer uppercase px-4 py-2 rounded-md hover:bg-zinc-600 transition-colors block mb-4;
+    }
 }
 

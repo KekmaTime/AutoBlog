@@ -2,11 +2,38 @@ import { getSession, withPageAuthRequired } from "@auth0/nextjs-auth0";
 import { AppLayout } from "../../components/AppLayout";
 import clientPromise from "../../lib/mongodb";
 import { ObjectID } from "mongodb";
+import Markdown from "react-markdown";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHashtag } from "@fortawesome/free-solid-svg-icons";
 
 export default function Post(props){
     console.log("Props: " , props);
     return (
-        <div>This is the post page</div>
+        <div className="overflow-auto h-full">
+            <div className="max-w-screen-sm mx-auto">
+                <div className="text-lg font-bold mt-6 p-2 bg-zinc-800 rounded-sm text-white">
+                    SEO Title and Metadescription
+                </div>
+                <div className=" text-white p-4 my-2 border border-zinc-700 rounded-md">
+                    <div className="text-blue-500 text-2xl font-bold">{props.title}</div>
+                    <div className="mt-5">{props.metaDescription}</div>
+                </div>
+                <div className="text-lg font-bold mt-6 p-2 bg-zinc-800 rounded-sm text-white">
+                    Keywords
+                </div>
+                <div className="flex flex-wrap pt-2 gap-1">
+                {props.keywords.split(',').map((keyword, i) => (
+                <div key={i} className="p-2 rounded bg-zinc-900 text-white">
+                    <FontAwesomeIcon icon={faHashtag}/> {keyword.trim()}
+                    </div>
+                    ))}
+                </div>
+                <div className="text-lg font-bold mt-6 p-2 bg-zinc-800 rounded-sm text-white">
+                    Blog Post
+                </div>
+                <div className="text-white" dangerouslySetInnerHTML={{__html: props.postContent || ''}} />
+            </div>
+        </div>
     );
 }
 
@@ -39,7 +66,7 @@ export const getServerSideProps = withPageAuthRequired ({
         return {
             props: {
                 postContent: post.postContent,
-                title: post.title,
+                title: post.title.replace(/<[^>]*>/g, ''),
                 metaDescription: post.metaDescription,
                 keywords: post.keywords
             }
