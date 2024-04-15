@@ -1,11 +1,10 @@
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import { AppLayout } from "../../components/AppLayout";
 import { useState } from "react";
-import Markdown from "react-markdown";
+import { useRouter } from "next/router";
 
 export default function NewPost(props){
-    console.log("Props",props);
-    const [postContent, setPostContent] = useState("");
+    const router = useRouter();
     const [topic, setTopic] = useState("");
     const [keywords, setKeywords] = useState("");
     const PostGen = async(e) => {
@@ -18,7 +17,10 @@ export default function NewPost(props){
             body: JSON.stringify({topic, keywords}),
         });
         const json = await response.json();
-        setPostContent(json.post.postContent);
+        console.log("Result" , json);
+        if(json?.postId){
+            router.push(`/post/${json.postId}`);
+        }
     };
     return(
         <div className="text-white">
@@ -29,7 +31,7 @@ export default function NewPost(props){
                             Generate a Blog Post on the topic of :
                         </strong>
                     </label>
-                    <textarea className="resize-none border border-zinc-600 w-full black my-2 px-4 py-2 rounded-sm" value={topic} onChange={(e) => setTopic(e.target.value)}/>
+                    <textarea className="resize-none border text-black border-zinc-600 w-full black my-2 px-4 py-2 rounded-sm" value={topic} onChange={(e) => setTopic(e.target.value)}/>
                 </div>
                 <div>
                 <label>
@@ -37,13 +39,12 @@ export default function NewPost(props){
                         Targetting the following Keywords :
                     </strong>
                     </label>
-                    <textarea className="resize-none border border-zinc-600 w-full black my-2 px-4 py-2 rounded-sm" value={keywords} onChange={(e) => setKeywords(e.target.value)}/>
+                    <textarea className="resize-none border text-black border-zinc-600 w-full black my-2 px-4 py-2 rounded-sm" value={keywords} onChange={(e) => setKeywords(e.target.value)}/>
                 </div>
             <button type="submit" className="bg-zinc-400 tracking-wider font-bold cursor-pointer uppercase px-4 py-2 rounded-md hover:bg-zinc-6000 transition-colors block">
                 Generate
             </button>
             </form>
-            <Markdown>{postContent}</Markdown>
             </div>
     
     );
